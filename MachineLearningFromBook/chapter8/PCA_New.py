@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import time
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from sklearn.decomposition import PCA
@@ -128,6 +129,17 @@ batch_size=m//n_batches
 inc_pca=IncrementalPCA(n_components=154,batch_size=batch_size)
 print(inc_pca.fit(X_mm))
 
+
+for n_components in (2,10,154):
+    print("n_components :",n_components)
+    regular_pca=PCA(n_components=n_components,svd_solver='full')
+    inc_pca=IncrementalPCA(n_components=n_components,batch_size=500)
+    rnd_pca=PCA(n_components=n_components,random_state=42,svd_solver="randomized")
+    for name,pca in (("PCA",regular_pca),("Incremental PCA",inc_pca),("Random PCA",regular_pca)):
+        t1=time.time()
+        pca.fit(X_train)
+        t2=time.time()
+        print("{}:{:.2f} seconds".format(name,t2-t1))
 
 
 

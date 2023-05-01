@@ -115,31 +115,58 @@ n_batches=100
 # print(np.allclose(X_reduced_pca,X_reduced_inc_pca))
 
 
-filename="my_mnist.data"
-m,n=X_train.shape
+# filename="my_mnist.data"
+# m,n=X_train.shape
+#
+# X_mm=np.memmap(filename,dtype='float32',mode='write',shape=(m,n))
+# X_mm[:]=X_train
+#
+# del X_mm
+#
+# X_mm=np.memmap(filename,dtype='float32',mode='readonly',shape=(m,n))
+#
+# batch_size=m//n_batches
+# inc_pca=IncrementalPCA(n_components=154,batch_size=batch_size)
+# print(inc_pca.fit(X_mm))
 
-X_mm=np.memmap(filename,dtype='float32',mode='write',shape=(m,n))
-X_mm[:]=X_train
 
-del X_mm
+# Time complexity
 
-X_mm=np.memmap(filename,dtype='float32',mode='readonly',shape=(m,n))
+# for n_components in (2,10,154):
+#     print("n_components :",n_components)
+#     regular_pca=PCA(n_components=n_components,svd_solver='full')
+#     inc_pca=IncrementalPCA(n_components=n_components,batch_size=500)
+#     rnd_pca=PCA(n_components=n_components,random_state=42,svd_solver="randomized")
+#     for name,pca in (("PCA",regular_pca),("Incremental PCA",inc_pca),("Random PCA",regular_pca)):
+#         t1=time.time()
+#         pca.fit(X_train)
+#         t2=time.time()
+#         print("{}:{:.2f} seconds".format(name,t2-t1))
 
-batch_size=m//n_batches
-inc_pca=IncrementalPCA(n_components=154,batch_size=batch_size)
-print(inc_pca.fit(X_mm))
 
+times_rpca=[]
+times_pca=[]
+sizes=[1000,10000,20000,30000,40000,50000,80000,100000,500000]
+for n_samples in sizes:
+    X=np.random.randn(n_samples,5)
+    pca=PCA(n_components=2,svd_solver='randomized',random_state=42)
+    t1=time.time()
+    pca.fit(X)
+    t2=time.time()
+    times_rpca.append(t2-t1)
+    pca = PCA(n_components=2, svd_solver='full')
+    t1 = time.time()
+    pca.fit(X)
+    t2 = time.time()
+    times_pca.append(t2 - t1)
 
-for n_components in (2,10,154):
-    print("n_components :",n_components)
-    regular_pca=PCA(n_components=n_components,svd_solver='full')
-    inc_pca=IncrementalPCA(n_components=n_components,batch_size=500)
-    rnd_pca=PCA(n_components=n_components,random_state=42,svd_solver="randomized")
-    for name,pca in (("PCA",regular_pca),("Incremental PCA",inc_pca),("Random PCA",regular_pca)):
-        t1=time.time()
-        pca.fit(X_train)
-        t2=time.time()
-        print("{}:{:.2f} seconds".format(name,t2-t1))
+plt.plot(sizes,times_rpca,"b-o",label="RPCA")
+plt.plot(sizes,times_pca,"r-s",label="PCA")
+plt.xlabel("n_samples")
+plt.ylabel("Training time")
+plt.legend(loc="best")
+plt.title("PCA and RPCA time complexity")
+plt.show()
 
 
 

@@ -169,4 +169,28 @@ plt.title("PCA and RPCA time complexity")
 plt.show()
 
 
+times_rpca=[]
+times_pca=[]
+sizes=[1000,2000,3000,4000,5000,6000]
+for n_features in sizes:
+    X=np.random.randn(2000,n_features)
+    pca=PCA(n_components=2,svd_solver='randomized',random_state=42)
+    t1=time.time()
+    pca.fit(X)
+    t2=time.time()
+    times_rpca.append(t2-t1)
+    pca = PCA(n_components=2, svd_solver='full')
+    t1 = time.time()
+    pca.fit(X)
+    t2 = time.time()
+    times_pca.append(t2 - t1)
+
+
+plt.plot(sizes,times_rpca,"b-o",label="RPCA")
+plt.plot(sizes,times_pca,"r-s",label="PCA")
+plt.xlabel("n_features")
+plt.ylabel("Training time")
+plt.legend(loc="best")
+plt.title("PCA and RPCA time complexity")
+plt.show()
 

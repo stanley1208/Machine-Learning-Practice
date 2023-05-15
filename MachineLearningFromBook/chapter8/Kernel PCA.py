@@ -28,3 +28,20 @@ for subplot, pca, title in ((131, lin_pca, "Linear kernel"), (132, rbf_pca, "RBF
     # plt.grid(True)
 
 plt.show()
+
+
+plt.figure(figsize=(10,8))
+
+X_inverse=rbf_pca.inverse_transform(X_reduced_rbf)
+
+ax=plt.subplot(111,projection='3d')
+# ax.view_init(10,-70)
+ax.scatter(X_inverse[:,0],X_inverse[:,1],X_inverse[:,2],c=t,cmap=plt.cm.hot,marker='+')
+ax.set_xlabel("")
+ax.set_ylabel("")
+ax.set_zlabel("")
+# ax.set_xticklabels([])
+# ax.set_yticklabels([])
+# ax.set_zticklabels([])
+
+plt.show()

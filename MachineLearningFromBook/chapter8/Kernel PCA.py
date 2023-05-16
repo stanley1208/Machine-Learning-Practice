@@ -10,7 +10,7 @@ X,t=make_swiss_roll(n_samples=1000,noise=0.2,random_state=42)
 
 lin_pca=KernelPCA(n_components=2,kernel='linear',fit_inverse_transform=True)
 rbf_pca=KernelPCA(n_components=2,kernel='rbf',gamma=0.04,fit_inverse_transform=True)
-sig_pca=KernelPCA(n_components=2,kernel='sigmoid',gamma=0.0001,fit_inverse_transform=True)
+sig_pca=KernelPCA(n_components=2,kernel='sigmoid',gamma=0.001,fit_inverse_transform=True)
 
 
 plt.figure(figsize=(12,6))
@@ -44,4 +44,14 @@ ax.set_zlabel("")
 # ax.set_yticklabels([])
 # ax.set_zticklabels([])
 
+plt.show()
+
+
+X_inverse=rbf_pca.fit_transform(X)
+
+plt.figure(figsize=(10,8))
+# plt.subplot(132)
+plt.scatter(X_reduced[:,0],X_reduced[:,1],c=t,cmap=plt.cm.hot,marker='*')
+plt.xlabel("$z_1$",fontsize=18)
+plt.ylabel("$z_2$",fontsize=18,rotation=0)
 plt.show()

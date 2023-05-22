@@ -1,6 +1,10 @@
+import numpy as np
 from sklearn.decomposition import KernelPCA
 from sklearn.datasets import make_swiss_roll
 import matplotlib.pyplot as plt
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
 
 
 X,t=make_swiss_roll(n_samples=1000,noise=0.2,random_state=42)
@@ -10,8 +14,9 @@ X,t=make_swiss_roll(n_samples=1000,noise=0.2,random_state=42)
 
 lin_pca=KernelPCA(n_components=2,kernel='linear',fit_inverse_transform=True)
 rbf_pca=KernelPCA(n_components=2,kernel='rbf',gamma=0.04,fit_inverse_transform=True)
-sig_pca=KernelPCA(n_components=2,kernel='sigmoid',gamma=0.001,fit_inverse_transform=True)
+sig_pca=KernelPCA(n_components=2,kernel='sigmoid',gamma=0.00000001,fit_inverse_transform=True)
 
+y=t>6.9
 
 plt.figure(figsize=(12,6))
 for subplot, pca, title in ((131, lin_pca, "Linear kernel"), (132, rbf_pca, "RBF kernel, $\gamma=0.04$"), (133, sig_pca, "Sigmoid kernel, $\gamma=10^{-3}, r=1$")):
@@ -50,8 +55,23 @@ plt.show()
 X_inverse=rbf_pca.fit_transform(X)
 
 plt.figure(figsize=(10,8))
-# plt.subplot(132)
+plt.subplot(132)
 plt.scatter(X_reduced[:,0],X_reduced[:,1],c=t,cmap=plt.cm.hot,marker='*')
 plt.xlabel("$z_1$",fontsize=18)
 plt.ylabel("$z_2$",fontsize=18,rotation=0)
 plt.show()
+
+
+clf=Pipeline([
+    ("kpca", KernelPCA(n_components=2)),
+    ("log_reg", LogisticRegression(solver='lbfgs'))
+    ])
+
+param_grid=[{
+    "kpca__gamma": np.linspace(0.03,0.05,10),
+    "kpca__kernel": ['rbf','sigmoid']
+    }]
+
+grid_search=GridSearchCV(clf,param_grid,cv=3)
+print(grid_search.fit(X,y))
+

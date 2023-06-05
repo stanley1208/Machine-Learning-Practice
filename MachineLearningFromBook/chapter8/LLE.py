@@ -1,6 +1,15 @@
 from sklearn.datasets import make_swiss_roll
 from sklearn.manifold import LocallyLinearEmbedding
+from sklearn.manifold import MDS
+from sklearn.manifold import Isomap
+from sklearn.manifold import TSNE
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.datasets import fetch_openml
 import matplotlib.pyplot as plt
+import numpy as np
+
+mnist=fetch_openml('mnist_784',version=1,as_frame=False)
+mnist.target=mnist.target.astype(np.int8)
 
 
 
@@ -16,3 +25,32 @@ plt.ylabel("$z_2$",fontsize=18)
 plt.axis([-0.065,0.055,-0.1,0.12])
 plt.grid(True)
 plt.show()
+
+
+# Other Dimensionality Reduction Techniques
+# Multidimensional Scaling (MDS)
+mds=MDS(n_components=2,random_state=42)
+X_reduced_mds=mds.fit_transform(X)
+
+# Isomap
+isomap=Isomap(n_components=2)
+X_reduced_isomap=isomap.fit_transform(X)
+
+# t-Distributed Stochastic Neighbor Embedding (t-SNE)
+tsne=TSNE(n_components=2,random_state=42)
+X_reduced_tsne=tsne.fit_transform(X)
+
+# Linear Discriminant Analysis (LDA)
+lda=LinearDiscriminantAnalysis(n_components=2)
+X_mnist=mnist['data']
+y_mnist=mnist['target']
+lda.fit_transform(X_mnist,y_mnist)
+X_reduced_lda=lda.transform(X_mnist)
+
+
+
+
+
+
+
+

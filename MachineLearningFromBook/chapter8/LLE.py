@@ -48,6 +48,25 @@ lda.fit_transform(X_mnist,y_mnist)
 X_reduced_lda=lda.transform(X_mnist)
 
 
+titles=["MDS","Isomap","t-SNE"]
+plt.figure(figsize=(10,8))
+
+for subplot,title, X_reduced in zip((131,132,133),titles,
+                                (X_reduced_mds,X_reduced_isomap,X_reduced_tsne)):
+
+    plt.subplot(subplot)
+    plt.title(title,fontsize=14)
+    plt.scatter(X_reduced[:,0],X_reduced[:,1],c=t,cmap=plt.cm.hot)
+    plt.xlabel("$z_1$",fontsize=18)
+    if subplot==131:
+        plt.ylabel("$z_2$",fontsize=18,rotation=0)
+
+    plt.grid(True)
+plt.show()
+
+
+
+
 
 
 

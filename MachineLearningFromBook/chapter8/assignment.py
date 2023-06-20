@@ -1,4 +1,3 @@
-# question9
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import fetch_openml
 import time
@@ -6,8 +5,12 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 
 
+
+# question9
 mnist=fetch_openml('mnist_784',version=1,as_frame=False)
 mnist.target=mnist.target.astype(np.float)
 
@@ -65,6 +68,27 @@ print("Training time: {:.2f}".format(t1-t0))
 
 y_pred=log_clf2.predict(X_test_reduced)
 print(accuracy_score(y_test,y_pred))
+
+
+# question10
+np.random.seed(42)
+m=10000
+idx=np.random.permutation(60000)[:m]
+
+X=mnist['data'][idx]
+y=mnist['target'][idx]
+
+tsne=TSNE(n_components=2,random_state=42)
+X_reduced=tsne.fit_transform(X)
+
+
+plt.figure(figsize=(10,10))
+plt.scatter(X_reduced[:,0],X_reduced[:,1],c=y,cmap='jet')
+plt.axis('off')
+plt.colorbar()
+plt.show()
+
+
 
 
 

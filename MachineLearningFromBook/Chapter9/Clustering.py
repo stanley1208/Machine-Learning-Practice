@@ -4,6 +4,7 @@ from sklearn.mixture import GaussianMixture
 from scipy import stats
 import numpy as np
 from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans
 
 
 data=load_iris()
@@ -73,3 +74,16 @@ def plot_cluster(X,y=None):
 plt.figure(figsize=(10,8))
 plot_cluster(X)
 plt.show()
+
+
+k=5
+kmeans=KMeans(n_clusters=k,random_state=42)
+y_pred=kmeans.fit_predict(X)
+
+print(y_pred)
+print(y_pred is kmeans.labels_)
+print(kmeans.cluster_centers_)
+print(kmeans.labels_)
+
+X_new=np.array([[0,2],[3,2],[-3,3],[-3,2.5]])
+print(kmeans.predict(X_new))

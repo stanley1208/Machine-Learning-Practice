@@ -127,3 +127,7 @@ print(kmeans.predict(X_new))
 plt.figure(figsize=(10,8))
 plot_decision_boundaries(kmeans,X)
 plt.show()
+
+print(kmeans.transform(X_new))
+
+print(np.linalg.norm(np.tile(X_new,(1,k)).reshape(-1,k,2)-kmeans.cluster_centers_,axis=2))

@@ -98,6 +98,7 @@ blob_centers=np.array(
      [-2.8,2.8],
      [-2.8,1.3]]
 )
+
 blob_std=np.array([0.4,0.3,0.1,0.1,0.1])
 X,y=make_blobs(n_samples=2000,centers=blob_centers,cluster_std=blob_std,random_state=7)
 
@@ -131,3 +132,12 @@ plt.show()
 print(kmeans.transform(X_new))
 
 print(np.linalg.norm(np.tile(X_new,(1,k)).reshape(-1,k,2)-kmeans.cluster_centers_,axis=2))
+
+
+kmeans_iter1=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",max_iter=1,random_state=0)
+kmeans_iter2=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",max_iter=2,random_state=0)
+kmeans_iter3=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",max_iter=3,random_state=0)
+
+print(kmeans_iter1.fit(X))
+print(kmeans_iter2.fit(X))
+print(kmeans_iter3.fit(X))

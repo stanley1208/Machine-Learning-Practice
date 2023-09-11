@@ -47,6 +47,22 @@ def plot_decision_boundaries(clusterer,X,resolution=10000,show_centroids=True,sh
     else:
         plt.tick_params(labelleft=False)
 
+def plot_clusterer_comparison(clusterer1,clusterer2,X,title1=None,title2=None):
+    clusterer1.fit(X)
+    clusterer2.fit(X)
+
+    plt.figure(figsize=(10,3.2))
+
+    plt.subplot(121)
+    plot_decision_boundaries(clusterer1,X)
+    if title1:
+        plt.title(title1,fontsize=14)
+
+    plt.subplot(122)
+    plot_decision_boundaries(clusterer2,X)
+    if title2:
+        plt.title(title2, fontsize=14)
+
 
 # plt.figure(figsize=(10,8))
 #
@@ -171,6 +187,14 @@ plt.subplot(326)
 plot_decision_boundaries(kmeans_iter3,X,show_ylabels=False)
 
 plt.show()
+
+
+kmeans_rnd_init1=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",random_state=2)
+kmeans_rnd_init2=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",random_state=5)
+
+plot_clusterer_comparison(kmeans_rnd_init1,kmeans_rnd_init2,X,"Solution 1","Solution2 (with a different random init)")
+plt.show()
+
 
 
 

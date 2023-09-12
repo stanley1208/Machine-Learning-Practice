@@ -195,6 +195,8 @@ kmeans_rnd_init2=KMeans(n_clusters=5,init="random",n_init=1,algorithm="full",ran
 plot_clusterer_comparison(kmeans_rnd_init1,kmeans_rnd_init2,X,"Solution 1","Solution2 (with a different random init)")
 plt.show()
 
+print(kmeans.inertia_)
+
 
 
 

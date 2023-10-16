@@ -196,6 +196,7 @@ plot_clusterer_comparison(kmeans_rnd_init1,kmeans_rnd_init2,X,"Solution 1","Solu
 plt.show()
 
 print(kmeans.inertia_)
+print(kmeans.score(X))
 
 
 

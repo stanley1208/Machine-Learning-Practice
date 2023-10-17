@@ -198,6 +198,9 @@ plt.show()
 print(kmeans.inertia_)
 print(kmeans.score(X))
 
+print(kmeans_rnd_init1.inertia_)
+print(kmeans_rnd_init2.inertia_)
+
 
 
 

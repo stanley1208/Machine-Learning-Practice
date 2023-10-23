@@ -201,6 +201,13 @@ print(kmeans.score(X))
 print(kmeans_rnd_init1.inertia_)
 print(kmeans_rnd_init2.inertia_)
 
+kmeans_rnd_10_inits=KMeans(n_clusters=5,init="random",n_init=10,algorithm="full",random_state=2)
+kmeans_rnd_10_inits.fit(X)
+
+plt.figure(figsize=(10,8))
+plot_decision_boundaries(kmeans_rnd_10_inits,X)
+plt.show()
+
 
 
 

@@ -209,6 +209,11 @@ plot_decision_boundaries(kmeans_rnd_10_inits,X)
 plt.show()
 
 
+good_init=np.array([[-3,3],[-3,2],[-3,1],[-1,2],[0,2]])
+kmeans=KMeans(n_clusters=5,init=good_init,n_init=1,random_state=42)
+kmeans.fit(X)
+print(kmeans.inertia_)
+
 
 
 

@@ -5,6 +5,7 @@ from scipy import stats
 import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
+from sklearn.cluster import MiniBatchKMeans
 
 
 data=load_iris()
@@ -213,6 +214,13 @@ good_init=np.array([[-3,3],[-3,2],[-3,1],[-1,2],[0,2]])
 kmeans=KMeans(n_clusters=5,init=good_init,n_init=1,random_state=42)
 kmeans.fit(X)
 print(kmeans.inertia_)
+
+
+minibatch_kmeans=MiniBatchKMeans(n_clusters=5,random_state=42)
+minibatch_kmeans.fit(X)
+print(minibatch_kmeans.inertia_)
+
+
 
 
 

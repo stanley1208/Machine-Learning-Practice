@@ -6,7 +6,9 @@ import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 from sklearn.cluster import MiniBatchKMeans
-
+import urllib.request
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
 
 data=load_iris()
 X=data.data
@@ -220,6 +222,18 @@ minibatch_kmeans=MiniBatchKMeans(n_clusters=5,random_state=42)
 minibatch_kmeans.fit(X)
 print(minibatch_kmeans.inertia_)
 
+
+mnist=fetch_openml('mnist_784',version=1,as_frame=False)
+mnist.target=mnist.target.astype(np.int64)
+
+X_train,X_test,y_train,y_test=train_test_split(mnist["data"],mnist["target"],random_state=42)
+
+filename="my_mnist.data"
+X_mm=np.memmap(filename,dtype="float32",mode='write',shape=X_train.shape)
+X_mm[:]=X_train
+
+minibatch_kmeans=MiniBatchKMeans(n_clusters=10,batch_size=10,random_state=42)
+minibatch_kmeans.fit(X_mm)
 
 
 

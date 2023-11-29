@@ -236,6 +236,11 @@ minibatch_kmeans=MiniBatchKMeans(n_clusters=10,batch_size=10,random_state=42)
 minibatch_kmeans.fit(X_mm)
 
 
+def load_next_batch(batch_size):
+    return X[np.random.choice(len(X),batch_size,replace=False)]
+
+
+
 
 
 

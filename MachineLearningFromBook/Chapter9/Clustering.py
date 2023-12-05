@@ -240,6 +240,33 @@ def load_next_batch(batch_size):
     return X[np.random.choice(len(X),batch_size,replace=False)]
 
 
+k=5
+n_init=10
+n_iteratons=100
+batch_size=100
+init_size=500
+evaluate_on_last_n_iters=10
+
+best_kmeans=None
+
+for init in range(n_init):
+    minibatch_kmeans=MiniBatchKMeans(n_clusters=k,init_size=init_size)
+    X_init=load_next_batch(init_size)
+    minibatch_kmeans.partial_fit(X_init)
+
+    minibatch_kmeans.sum_inertia_=0
+    for iteration in range(n_iteratons):
+        X_batch=load_next_batch(batch_size)
+        minibatch_kmeans.partial_fit(X_batch)
+        if iteration>=n_iteratons-evaluate_on_last_n_iters:
+            minibatch_kmeans.sum_inertia_+=minibatch_kmeans.inertia_
+
+    if (best_kmeans is None or minibatch_kmeans.sum_inertia_<best_kmeans.sum_inertia_):
+        best_kmeans=minibatch_kmeans
+
+print(best_kmeans.score(X))
+
+
 
 
 

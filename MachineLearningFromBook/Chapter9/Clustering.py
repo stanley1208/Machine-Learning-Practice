@@ -9,6 +9,7 @@ from sklearn.cluster import MiniBatchKMeans
 import urllib.request
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
+from timeit import timeit
 
 data=load_iris()
 X=data.data
@@ -265,6 +266,19 @@ for init in range(n_init):
         best_kmeans=minibatch_kmeans
 
 print(best_kmeans.score(X))
+
+times=np.empty((100,2))
+inertias=np.empty((100,2))
+for k in range(1,101):
+    kmeans_=KMeans(n_clusters=k,random_state=42)
+    minibatch_kmeans=MiniBatchKMeans(n_clusters=k,random_state=42)
+    print("\r{}/{}".format(k,100),end="")
+    times[k-1,0]=timeit("kmeans_.fit(X)",number=10,globals=globals())
+    times[k - 1, 1] = timeit("minibatch_kmeans.fit(X)", number=10, globals=globals())
+    inertias[k - 1, 0] = kmeans_.inertia_
+    inertias[k - 1, 1] = minibatch_kmeans.inertia_
+
+
 
 
 

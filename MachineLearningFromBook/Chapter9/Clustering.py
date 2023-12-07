@@ -279,6 +279,27 @@ for k in range(1,101):
     inertias[k - 1, 1] = minibatch_kmeans.inertia_
 
 
+plt.figure(figsize=(10,4))
+
+plt.subplot(121)
+plt.plot(range(1,101),inertias[:,0],"r--",label="K-Means")
+plt.plot(range(1,101),inertias[:,1],"b.-",label="Mini-Batch K-Means")
+plt.xlabel("$k$",fontsize=14)
+plt.title("Inertia",fontsize=14)
+plt.legend(fontsize=14)
+plt.axis([1,100,0,100])
+
+plt.subplot(122)
+plt.plot(range(1,101),times[:,0],"r--",label="K-Means")
+plt.plot(range(1,101),times[:,1],"b.-",label="Mini-Batch K-Means")
+plt.xlabel("$k$",fontsize=16)
+plt.title("Training time (s)",fontsize=14)
+plt.axis([1,100,0,6])
+
+plt.show()
+
+
+
 
 
 

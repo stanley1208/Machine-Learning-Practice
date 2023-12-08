@@ -298,6 +298,12 @@ plt.axis([1,100,0,6])
 
 plt.show()
 
+kmeans_k3=KMeans(n_clusters=3,random_state=42)
+kmeans_k8=KMeans(n_clusters=8,random_state=42)
+
+plot_clusterer_comparison(kmeans_k3,kmeans_k8,X,"$k=3$","$k=8$")
+plt.show()
+
 
 
 

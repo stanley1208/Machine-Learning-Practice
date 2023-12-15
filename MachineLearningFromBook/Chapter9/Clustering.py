@@ -304,6 +304,19 @@ kmeans_k8=KMeans(n_clusters=8,random_state=42)
 plot_clusterer_comparison(kmeans_k3,kmeans_k8,X,"$k=3$","$k=8$")
 plt.show()
 
+print(kmeans_k3.inertia_)
+print(kmeans_k8.inertia_)
+
+kmeans_per_k=[KMeans(n_clusters=k,random_state=42).fit(X) for k in range(1,10)]
+inertias=[model.inertia_ for model in kmeans_per_k]
+
+
+
+
+
+
+
+
 
 
 

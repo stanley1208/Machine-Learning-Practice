@@ -310,6 +310,20 @@ print(kmeans_k8.inertia_)
 kmeans_per_k=[KMeans(n_clusters=k,random_state=42).fit(X) for k in range(1,10)]
 inertias=[model.inertia_ for model in kmeans_per_k]
 
+plt.figure(figsize=(10,8))
+plt.plot(range(1,10),inertias,"bo-")
+plt.xlabel("$k$",fontsize=14)
+plt.ylabel("Inertia",fontsize=14)
+plt.annotate('Elbow',
+             xy=(4,inertias[3]),
+             xytext=(0.55,0.55),
+             textcoords='figure fraction',
+             fontsize=16,
+             arrowprops=dict(facecolor='black',shrink=0.1)
+             )
+
+plt.axis([1,8.5,0,1300])
+plt.show()
 
 
 

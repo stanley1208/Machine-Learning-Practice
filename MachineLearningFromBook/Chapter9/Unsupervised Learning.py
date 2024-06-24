@@ -1,5 +1,10 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from sklearn.datasets import load_iris
+from scipy import stats
+from sklearn.mixture import GaussianMixture
+
+
 
 plt.rc('font', size=14)
 plt.rc('axes', labelsize=14,titlesize=14)
@@ -41,3 +46,22 @@ plt.show()
 # print(X[y==2,2],X[y==2,3])
 
 # print(X[:,2],X[:,3])
+
+
+y_pred=GaussianMixture(n_components=3,random_state=42).fit(X).predict(X)
+
+mapping={}
+for class_id in np.unique(y):
+    mode,_=stats.mode(y_pred[y==class_id])
+    mapping[mode]=class_id
+
+y_pred=np.array([mapping[cluster_id] for cluster_id in y_pred])
+
+plt.plot(X[y_pred==0,2],X[y_pred==0,3],'yo',label='Cluster 1')
+plt.plot(X[y_pred==1,2],X[y_pred==1,3],'bs',label='Cluster 2')
+plt.plot(X[y_pred==2,2],X[y_pred==2,3],'g^',label='Cluster 3')
+plt.xlabel('Petal length')
+plt.ylabel('Petal width')
+plt.legend(loc='best')
+plt.grid()
+plt.show()

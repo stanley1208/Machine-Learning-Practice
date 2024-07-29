@@ -90,3 +90,10 @@ plot_clusters(X)
 plt.gca().set_axisbelow(True)
 plt.grid()
 plt.show()
+
+print(y_pred is kmeans.labels_)
+print(kmeans.cluster_centers_)
+print(kmeans.labels_)
+
+X_new=np.array([[0, 2], [3, 2], [-3, 3], [-3, 2.5]])
+print(kmeans.predict(X_new))

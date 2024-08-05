@@ -97,3 +97,15 @@ print(kmeans.labels_)
 
 X_new=np.array([[0, 2], [3, 2], [-3, 3], [-3, 2.5]])
 print(kmeans.predict(X_new))
+
+# Decision Boundaries
+def plot_data(X):
+    plt.plot(X[:,0],X[:,1],markersize=2)
+
+def plot_centroids(centroids,weight=None,circle_color='w',cross_color='k'):
+    if weight is not None:
+        centroids=centroids[weight>weight.max()/10]
+    plt.scatter(centroids[:,0], centroids[:,1],marker='o',s=35,linewidths=8,color=circle_color,zorder=10,alpha=0.5)
+    plt.scatter(centroids[:, 0], centroids[:, 1], marker='x', s=2, linewidths=12, color=cross_color, zorder=11,
+                alpha=1)
+

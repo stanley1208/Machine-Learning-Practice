@@ -68,3 +68,5 @@ for subplot,learning_rate in ((0,1),(1,0.5)):
 
 plt.show()
 
+
+

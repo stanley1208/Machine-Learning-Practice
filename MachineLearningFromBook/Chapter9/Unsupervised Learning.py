@@ -144,3 +144,14 @@ plot_decision_boundaries(kmeans,X)
 plt.show()
 
 print(kmeans.transform(X_new).round(2))
+
+
+kmeans_iter1=KMeans(n_clusters=5,init='random',n_init=1,max_iter=1,random_state=5)
+kmeans_iter2=KMeans(n_clusters=5,init='random',n_init=1,max_iter=2,random_state=5)
+kmeans_iter3=KMeans(n_clusters=5,init='random',n_init=1,max_iter=3,random_state=5)
+
+kmeans_iter1.fit(X)
+kmeans_iter2.fit(X)
+kmeans_iter3.fit(X)
+
+

@@ -31,9 +31,9 @@ def minimax(board, is_maximizing):
         best_score = -float('inf')
         for i in range(9):
             if board[i] == '-':
-                board[i] = 'o'
+                board[i] = 'o' # Simulating a move
                 score = minimax(board, False)
-                board[i] = '-'
+                board[i] = '-' # Undoing the move
                 best_score = max(score, best_score)
         return best_score
     else:
